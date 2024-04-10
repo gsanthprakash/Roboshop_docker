@@ -1,8 +1,19 @@
 FROM nginx:latest
-RUN rm -rf /usr/share/nginx/html/index.html
-RUN rm -rf /etc/nginx/nginx.conf
-RUN rm -rf /etc/nginx/conf.d/default.conf
+
+# Remove the default nginx index.html file
+RUN rm -rf /usr/share/nginx/html/*
+
+# Remove the default nginx configuration files
+RUN rm -rf /etc/nginx/nginx.conf /etc/nginx/conf.d/default.conf
+
+# Copy your custom nginx configuration
 COPY roboshop.conf /etc/nginx/nginx.conf
-ADD static /usr/share/nginx/html/
+
+# Copy your static files to the nginx HTML directory
+COPY static /usr/share/nginx/html/
+
+# Expose port 8080
 EXPOSE 8080
+
+# Start nginx in the foreground
 CMD ["nginx", "-g", "daemon off;"]
