@@ -1,10 +1,12 @@
+# this is multi stage buit
 FROM maven AS build
 WORKDIR /opt/shipping
 COPY pom.xml /opt/shipping/
 RUN mvn dependency:resolve
-COPY src /opt/shipping/
+COPY src /opt/shipping/src/
 RUN mvn package
 
+# run 
 FROM openjdk:8-jre-alpine3.9
 EXPOSE 8080
 WORKDIR /opt/shipping
