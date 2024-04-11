@@ -1,22 +1,14 @@
-FROM python:3.9
-
-# Set working directory
-WORKDIR /app
-
-# Copy the requirements file and install dependencies
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copy the Python files and configuration file
-COPY *.py .
-COPY payment.ini .
-
-# Expose the port
+FROM python:3.9-alpine
 EXPOSE 8080
-
-# Set environment variables
+USER root
+WORKDIR /app
+COPY requirements.txt /app/
+RUN apk --no-cache add build-base linux-headers
+RUN pip install --upgrade setuptools
+RUN pip install -r requirements.txt
+COPY *.py /app/
+COPY payment.ini /app/
 ENV AMQP_USER=roboshop \
     AMQP_PASS=roboshop123
-
-# Run the application
+#CMD ["python", "payment.py"]
 CMD ["uwsgi", "--ini", "payment.ini"]
