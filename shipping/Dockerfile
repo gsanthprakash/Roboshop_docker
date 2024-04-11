@@ -1,8 +1,5 @@
 FROM maven AS build
-RUN apt-get update -y && apt-get -y install maven
-
 WORKDIR /opt/shipping
-
 COPY pom.xml /opt/shipping/
 RUN mvn dependency:resolve
 COPY src /opt/shipping/
