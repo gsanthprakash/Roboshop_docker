@@ -46,6 +46,7 @@ services:
     networks:
       - roboshop
     depends_on:
+      - rabbitmq
       - cart
       - mysql
   rabbitmq:
@@ -56,6 +57,14 @@ services:
     environment:
       - RABBITMQ_DEFAULT_PASS=roboshop
       - RABBITMQ_DEFAULT_USER=roboshop123
+  payment:
+    image: payment:v1
+    container_name: payment
+    networks:
+      - roboshop
+    depends_on:
+      - user
+      - cart
   web:
     image: web:v1
     container_name: web
@@ -64,12 +73,9 @@ services:
     ports: 
       - "8080:80"
     depends_on:
-      - mongodb
       - catalogue
-      - redis
       - user
       - cart
-      - mysql
       - shipping
-      - rabbitmq
+      - payment
     
