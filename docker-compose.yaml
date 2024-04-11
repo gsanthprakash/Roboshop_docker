@@ -62,9 +62,9 @@ services:
     networks:
       - roboshop
     depends_on:
-      - rabbitmq 
       - user
       - cart
+      - rabbitmq 
   web:
     image: web:v1
     container_name: web
