@@ -40,9 +40,6 @@ services:
     container_name: mysql
     networks:
       - roboshop
-    depends_on:
-      - catalogue
-      - redis
   web:
     image: web:v1
     container_name: web
