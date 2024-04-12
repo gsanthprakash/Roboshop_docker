@@ -31,7 +31,7 @@ services:
     volumes:
       - source: redis
         target: /data
-        target: volume
+        type: volume
   user:
     image: gspvsr/user:v1
     container_name: user
